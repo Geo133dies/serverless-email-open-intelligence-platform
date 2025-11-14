@@ -1,71 +1,73 @@
-/*
-  Vercel serverless endpoint: /api/open
-  - Receives GET requests from email clients (img src)
-  - Forwards JSON to Google Apps Script webhook (APPSCRIPT_WEBHOOK env var)
-  - Responds with a 1x1 gif pixel
-*/
-
 export default async function handler(req, res) {
+  console.log("=== Pixel Request Received ===");
+
   try {
-    // Accept GET query params mid (mail id) and optional v (nonce)
-    const { mid = 'unknown', v = '' } = req.query || {};
+    const { mid = "unknown", v = "" } = req.query || {};
+    console.log("MID:", mid);
 
     const ts = new Date().toISOString();
-    const ua = req.headers['user-agent'] || '';
+    const ua = req.headers["user-agent"] || "";
     const ip =
-      req.headers['x-forwarded-for'] ||
+      req.headers["x-forwarded-for"] ||
       req.socket?.remoteAddress ||
-      '';
+      "";
+
+    console.log("User-Agent:", ua);
+    console.log("IP:", ip);
 
     const payload = {
       mid,
       ts,
       ua,
       ip,
-      forwardedFrom: 'vercel',
-      note: v ? `v=${v}` : ''
+      forwardedFrom: "vercel",
+      note: v ? `v=${v}` : "",
     };
 
     const webhook = process.env.APPSCRIPT_WEBHOOK;
+    console.log("Webhook URL:", webhook);
 
     if (!webhook) {
-      console.error('Missing APPSCRIPT_WEBHOOK env var');
+      console.error("ERROR: Missing APPSCRIPT_WEBHOOK env var");
     } else {
+      console.log("Forwarding payload to Apps Script...");
+      console.log(JSON.stringify(payload));
+
       try {
-        await fetch(webhook, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
+        const resp = await fetch(webhook, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
           body: JSON.stringify(payload),
         });
+
+        console.log("Apps Script Response Status:", resp.status);
+        console.log("Apps Script Response:", await resp.text());
       } catch (forwardError) {
-        console.error('Forward error:', forwardError?.message || forwardError);
+        console.error("FORWARD ERROR:", forwardError?.message || forwardError);
       }
     }
 
-    // Transparent 1x1 GIF
     const pixelGif = Buffer.from(
-      'R0lGODlhAQABAPAAAAAAAAAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==',
-      'base64'
+      "R0lGODlhAQABAPAAAAAAAAAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==",
+      "base64"
     );
 
-    res.setHeader('Content-Type', 'image/gif');
-    res.setHeader('Content-Length', pixelGif.length);
-    res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, max-age=0');
-    res.setHeader('Pragma', 'no-cache');
+    res.setHeader("Content-Type", "image/gif");
+    res.setHeader("Content-Length", pixelGif.length);
+    res.setHeader("Cache-Control", "no-store, no-cache, must-revalidate, max-age=0");
+    res.setHeader("Pragma", "no-cache");
 
     return res.status(200).send(pixelGif);
 
-  } catch (error) {
-    console.error('Handler error:', error);
+  } catch (err) {
+    console.error("HANDLER ERROR:", err);
 
     const pixelGifErr = Buffer.from(
-      'R0lGODlhAQABAPAAAAAAAAAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==',
-      'base64'
+      "R0lGODlhAQABAPAAAAAAAAAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==",
+      "base64"
     );
 
-    res.setHeader('Content-Type', 'image/gif');
+    res.setHeader("Content-Type", "image/gif");
     return res.status(200).send(pixelGifErr);
   }
 }

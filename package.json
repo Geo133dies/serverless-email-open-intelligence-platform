@@ -1,0 +1,7 @@
+{
+  "name": "email-open-tracker",
+  "version": "1.0.0",
+  "description": "Pixel tracking endpoint for email open tracking.",
+  "main": "api/open.js",
+  "license": "MIT"
+}

